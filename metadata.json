@@ -1,0 +1,8 @@
+{
+  "name": "FireChat Realtime",
+  "description": "A modern, responsive realtime chat application using Firebase Auth, Database, and Storage. Features 4-digit friend codes, media sharing, and instant presence.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
