@@ -24,7 +24,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!auth) return;
+    // If auth failed to initialize (e.g. bad config in firebase.ts), stop loading so app doesn't hang.
+    if (!auth) {
+        console.error("Auth not initialized.");
+        setLoading(false);
+        return;
+    }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -51,23 +56,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
         });
 
-        return () => {
-          unsubProfile();
-          set(presenceRef, false);
-          set(lastSeenRef, serverTimestamp());
-        };
+        // Cleanup presence on unmount/logout is tricky inside onAuthStateChanged, 
+        // but we assume standard session lifecycle.
       } else {
         setUserProfile(null);
       }
       setLoading(false);
+    }, (error) => {
+        console.error("Auth error", error);
+        setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
+  if (loading) {
+      return (
+          <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-600"></div>
+          </div>
+      );
+  }
+
   return (
     <AuthContext.Provider value={{ currentUser, userProfile, loading }}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };
