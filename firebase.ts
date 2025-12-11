@@ -13,13 +13,13 @@ const CONFIG_KEY = 'firechat_config';
 // 2. Do not remove the quotes or commas.
 // ============================================================================
 const firebaseConfig = {
-  apiKey: "AIzaSyDKFpwQU9W4Njvtmtz6N_Jc2kZjdY_CIEc",
-  authDomain: "connectsphare-a27d6.firebaseapp.com",
-  databaseURL: "https://connectsphare-a27d6-default-rtdb.firebaseio.com",
-  projectId: "connectsphare-a27d6",
-  storageBucket: "connectsphare-a27d6.firebasestorage.app",
-  messagingSenderId: "277886142393",
-  appId: "1:277886142393:web:44fedcbec4e9cc5363d868"
+  apiKey: "REPLACE_WITH_YOUR_API_KEY",
+  authDomain: "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://REPLACE_WITH_YOUR_PROJECT_ID.firebaseio.com",
+  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
+  storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
+  appId: "REPLACE_WITH_YOUR_APP_ID"
 };
 
 export const getStoredConfig = (): FirebaseConfig | null => {

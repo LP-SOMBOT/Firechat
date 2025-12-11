@@ -23,6 +23,7 @@ const NavItem = ({ to, icon: Icon, label, active }: any) => {
 export default function Layout() {
   const location = useLocation();
   const currentPath = location.pathname.split('/')[1] || 'home';
+  const isChatPage = currentPath === 'chat';
 
   const handleLogout = () => {
     auth.signOut();
@@ -60,13 +61,15 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      {/* Bottom Nav for Mobile */}
-      <nav className="md:hidden flex items-center justify-around bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 h-16 absolute bottom-0 w-full z-50 pb-safe">
-        <NavItem to="/home" icon={MessageSquare} label="Chats" active={currentPath === 'home' || currentPath === 'chat'} />
-        <NavItem to="/friends" icon={Users} label="Friends" active={currentPath === 'friends'} />
-        <NavItem to="/profile" icon={User} label="Profile" active={currentPath === 'profile'} />
-        <NavItem to="/settings" icon={Settings} label="Settings" active={currentPath === 'settings'} />
-      </nav>
+      {/* Bottom Nav for Mobile - Hidden on Chat Page */}
+      {!isChatPage && (
+        <nav className="md:hidden flex items-center justify-around bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 h-16 absolute bottom-0 w-full z-50 pb-safe">
+          <NavItem to="/home" icon={MessageSquare} label="Chats" active={currentPath === 'home' || currentPath === 'chat'} />
+          <NavItem to="/friends" icon={Users} label="Friends" active={currentPath === 'friends'} />
+          <NavItem to="/profile" icon={User} label="Profile" active={currentPath === 'profile'} />
+          <NavItem to="/settings" icon={Settings} label="Settings" active={currentPath === 'settings'} />
+        </nav>
+      )}
     </div>
   );
 }
