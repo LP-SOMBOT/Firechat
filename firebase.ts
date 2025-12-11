@@ -1,36 +1,34 @@
-/// <reference types="vite/client" />
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth } from 'firebase/auth';
 import { getDatabase, Database } from 'firebase/database';
 import { getStorage, FirebaseStorage } from 'firebase/storage';
 import { FirebaseConfig } from './types';
 
-const CONFIG_KEY = 'firechat_config'{
+const CONFIG_KEY = 'firechat_config';
 
-// 1. Try Environment Variables (Best for Netlify)
-
-
-// 2. Hardcoded Placeholders (Manually replace these if not using Env Vars
-  apiKey: "AIzaSyDKFpwQU9W4Njvtmtz6N_Jc2kZjdY_CIEc",
-  authDomain: "connectsphare-a27d6.firebaseapp.com",
-  databaseURL: "https://connectsphare-a27d6-default-rtdb.firebaseio.com",
-  projectId: "connectsphare-a27d6",
-  storageBucket: "connectsphare-a27d6.firebasestorage.app",
-  messagingSenderId: "277886142393",
-  appId: "1:277886142393:web:44fedcbec4e9cc5363d868"
+// ============================================================================
+// FIREBASE CONFIGURATION
+// Instructions: 
+// 1. Paste your actual Firebase keys inside the quotes below.
+// 2. Do not remove the quotes or commas.
+// ============================================================================
+const firebaseConfig = {
+  apiKey: "REPLACE_WITH_YOUR_API_KEY",
+  authDomain: "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://REPLACE_WITH_YOUR_PROJECT_ID.firebaseio.com",
+  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
+  storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
+  appId: "REPLACE_WITH_YOUR_APP_ID"
 };
 
 export const getStoredConfig = (): FirebaseConfig | null => {
-  // Priority: 
-  // 1. Environment Variables (if fully defined)
-  
-
-  // 2. Hardcoded Placeholders (if user edited the file)
-  if (placeholderConfig.apiKey !== "REPLACE_WITH_YOUR_API_KEY") {
-      return placeholderConfig as FirebaseConfig;
+  // 1. Use Hardcoded Config if user has updated it
+  if (firebaseConfig.apiKey !== "REPLACE_WITH_YOUR_API_KEY") {
+      return firebaseConfig as FirebaseConfig;
   }
 
-  // 3. Local Storage (Fallback for UI Config Page)
+  // 2. Local Storage (Fallback for UI Config Page)
   const stored = localStorage.getItem(CONFIG_KEY);
   return stored ? JSON.parse(stored) : null;
 };
@@ -57,8 +55,6 @@ if (config) {
     storage = getStorage(app);
   } catch (e) {
     console.error("Firebase init error", e);
-    // Don't clear local storage immediately in case it's a transient network error,
-    // but in a real app you might handle invalid config more gracefully.
   }
 }
 
